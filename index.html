@@ -107,169 +107,194 @@
     }
 
     #chartStats { margin-top: 10px; color: var(--muted); text-align: center; }
+
+    /* 過場影片浮層 */
+    #introVideo {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      object-fit: cover;
+      z-index: 999;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <h1>能在這裡相遇一定是命運石之門的選擇</h1>
-    <p>歡迎你來到我的網站，這裡有關於我的資訊可以讓你更好了解我，El Psy Kongroo。</p>
-    <nav class="main-nav">
-      <a href="#media">影片與圖片</a>
-      <a href="#stats">統計圖</a>
-      <a href="#classmates">同學網站</a>
-    </nav>
-  </header>
 
-  <main>
-   <section id="media" class="card">
-  <h2>我最喜歡的影片</h2>
-  <div class="video-wrap">
-<iframe 
-  width="1415" 
-  height="796" 
-  src="https://www.youtube.com/embed/I012yI2Kzqg?loop=1&playlist=I012yI2Kzqg" 
-  title="Steins;Gate 0 PS3/PS4/Vita OP - Amadeus" 
-  frameborder="0" 
-  allow="autoplay; encrypted-media; picture-in-picture" 
-  allowfullscreen>
-</iframe>
+  <!-- 過場動畫影片 -->
+  <video id="introVideo" src="intro.mp4" autoplay muted playsinline></video>
 
-  </div> <!-- 關閉 video-wrap div -->
+  <!-- 原本 sg.html 內容 -->
+  <div id="mainContent">
+    <header class="site-header">
+      <h1>能在這裡相遇一定是命運石之門的選擇</h1>
+      <p>歡迎你來到我的網站，這裡有關於我的資訊可以讓你更好了解我，El Psy Kongroo。</p>
+      <nav class="main-nav">
+        <a href="#media">影片與圖片</a>
+        <a href="#stats">統計圖</a>
+        <a href="#classmates">同學網站</a>
+      </nav>
+    </header>
 
-  <h2>我最喜歡的照片</h2>
-  <figure>
-    <img src="https://cdna.artstation.com/p/assets/images/images/050/568/388/large/asophxs-img-20220613-180840.jpg?1655161821" alt="照片">
-  </figure>
+    <main>
+      <section id="media" class="card">
+        <h2>我最喜歡的影片</h2>
+        <div class="video-wrap">
+          <iframe 
+            width="1415" 
+            height="796" 
+            src="https://www.youtube.com/embed/I012yI2Kzqg?loop=1&playlist=I012yI2Kzqg" 
+            title="Steins;Gate 0 PS3/PS4/Vita OP - Amadeus" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+        </div>
 
+        <h2>我最喜歡的照片</h2>
+        <figure>
+          <img src="https://cdna.artstation.com/p/assets/images/images/050/568/388/large/asophxs-img-20220613-180840.jpg?1655161821" alt="照片">
+        </figure>
+      </section>
 
+      <section id="stats" class="card">
+        <h2>CERN CMS 雙μ子不變質量分佈圖</h2>
+        <canvas id="chartCanvas"></canvas>
+        <div id="chartStats"></div>
+        <p class="note">此圖表顯示了來自 CMS 實驗的簡化雙μ子不變質量數據。在約91 GeV處的峰值代表Z玻色子。</p>
+      </section>
 
-    </section>
-    <section id="stats" class="card">
-      <h2>CERN CMS 雙μ子不變質量分佈圖</h2>
-      <canvas id="chartCanvas"></canvas>
-      <div id="chartStats"></div>
-      <p class="note">此圖表顯示了來自 CMS 實驗的簡化雙μ子不變質量數據。在約91 GeV處的峰值代表Z玻色子。</p>
-    </section>
+      <section id="classmates" class="card">
+        <h2>班上同學網站連結</h2>
+        <ul>
+          <li><a href="https://benbenben0721.github.io/-/" target="_blank">同學 A </a></li>
+          <li><a href="https://example.com/classmate2" target="_blank">同學 B 的網站（未完成）</a></li>
+          <li><a href="https://example.com/classmate3" target="_blank">同學 C 的網站（未完成）</a></li>
+        </ul>
+      </section>
+    </main>
 
-    <section id="classmates" class="card">
-      <h2>班上同學網站連結</h2>
-      <ul>
-        <li><a href="https://benbenben0721.github.io/-/" target="_blank">同學 A </a></li>
-        <li><a href="https://example.com/classmate2" target="_blank">同學 B 的網站（未完成）</a></li>
-        <li><a href="https://example.com/classmate3" target="_blank">同學 C 的網站（未完成）</a></li>
-      </ul>
-    </section>
-  </main>
+    <footer class="site-footer">
+      <p>聯絡：1976999g@gmail.com</p>
+      <p>歡迎來到未來道具研究所，我們對於科學的敬畏與熱愛不會改變，即便遭到神明的撻伐也一樣，El Psy Kongroo。</p>
+    </footer>
+  </div>
 
-  <footer class="site-footer">
-    <p>聯絡：1976999g@gmail.com</p>
-    <p>歡迎來到未來道具研究所，我們對於科學的敬畏與熱愛不會改變，即便遭到神明的撻伐也一樣，El Psy Kongroo。</p>
-  </footer>
+  <canvas id="chartCanvas" style="width:100%;height:400px;"></canvas>
 
-<canvas id="chartCanvas" style="width:100%;height:400px;"></canvas>
+  <script>
+  // 畫 CERN 資料圖表
+  (function(){
+    const canvas = document.getElementById('chartCanvas');
+    const ctx = canvas.getContext('2d');
+    const cernLabels = ['0-20','20-40','40-60','60-80','80-100','100-120','120-140','140-160'];
+    const cernData = [2500, 3000, 4500, 8000, 25000, 9000, 6000, 3500];
+    const barColor = '#4169E1';
+    const borderColor = '#191970';
 
-<script>
-(function(){
-  const canvas = document.getElementById('chartCanvas');
-  const ctx = canvas.getContext('2d');
-  const cernLabels = ['0-20','20-40','40-60','60-80','80-100','100-120','120-140','140-160'];
-  const cernData = [2500, 3000, 4500, 8000, 25000, 9000, 6000, 3500];
-  const barColor = '#4169E1';
-  const borderColor = '#191970';
-
-  function fixDPI() {
-    const dpr = window.devicePixelRatio || 1;
-    const rect = canvas.getBoundingClientRect();
-    if(rect.width === 0 || rect.height === 0) return;
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-
-  function roundRect(ctx,x,y,w,h,r,fill,stroke){
-    ctx.beginPath();
-    ctx.moveTo(x+r, y);
-    ctx.arcTo(x+w, y, x+w, y+h, r);
-    ctx.arcTo(x+w, y+h, x, y+h, r);
-    ctx.arcTo(x, y+h, x, y, r);
-    ctx.arcTo(x, y, x+w, y, r);
-    ctx.closePath();
-    if(fill) ctx.fill();
-    if(stroke) ctx.stroke();
-  }
-
-  function drawChart(){
-    fixDPI();
-    const w = canvas.width / (window.devicePixelRatio || 1);
-    const h = canvas.height / (window.devicePixelRatio || 1);
-    ctx.clearRect(0,0,w,h);
-
-    // 畫水平網格
-    ctx.beginPath();
-    ctx.strokeStyle = 'rgba(200,200,200,0.3)';
-    const numLines = 6;
-    const maxVal = Math.max(...cernData) * 1.1;
-    for(let i=0;i<numLines;i++){
-      const y = 50 + i*(h-100)/(numLines-1);
-      ctx.moveTo(40,y);
-      ctx.lineTo(w-20,y);
-
-      ctx.fillStyle = '#bbb';
-      ctx.font = '12px system-ui';
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'middle';
-      const val = Math.round(maxVal*(numLines-1-i)/(numLines-1));
-      ctx.fillText(val, 35, y);
+    function fixDPI() {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      if(rect.width === 0 || rect.height === 0) return;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
-    ctx.stroke();
 
-    // y 軸文字
-    ctx.save();
-    ctx.translate(20,h/2);
-    ctx.rotate(-Math.PI/2);
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#bbb';
-    ctx.fillText('事件數',0,0);
-    ctx.restore();
+    function roundRect(ctx,x,y,w,h,r,fill,stroke){
+      ctx.beginPath();
+      ctx.moveTo(x+r, y);
+      ctx.arcTo(x+w, y, x+w, y+h, r);
+      ctx.arcTo(x+w, y+h, x, y+h, r);
+      ctx.arcTo(x, y+h, x, y, r);
+      ctx.arcTo(x, y, x+w, y, r);
+      ctx.closePath();
+      if(fill) ctx.fill();
+      if(stroke) ctx.stroke();
+    }
 
-    // 畫 bar
-    const chartW = w-80;
-    const gap = 20;
-    const barWidth = (chartW - gap*(cernData.length-1))/cernData.length;
+    function drawChart(){
+      fixDPI();
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      ctx.clearRect(0,0,w,h);
 
-    cernData.forEach((v,i)=>{
-      const x = 60 + i*(barWidth+gap);
-      const barH = (h-140)*(v/maxVal);
-      const y = h-60-barH;
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(200,200,200,0.3)';
+      const numLines = 6;
+      const maxVal = Math.max(...cernData) * 1.1;
+      for(let i=0;i<numLines;i++){
+        const y = 50 + i*(h-100)/(numLines-1);
+        ctx.moveTo(40,y);
+        ctx.lineTo(w-20,y);
 
-      ctx.fillStyle = barColor;
-      roundRect(ctx,x,y,barWidth,barH,6,true,false);
+        ctx.fillStyle = '#bbb';
+        ctx.font = '12px system-ui';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        const val = Math.round(maxVal*(numLines-1-i)/(numLines-1));
+        ctx.fillText(val, 35, y);
+      }
+      ctx.stroke();
 
-      ctx.strokeStyle = borderColor;
-      ctx.lineWidth = 2;
-      roundRect(ctx,x,y,barWidth,barH,6,false,true);
-
-      ctx.fillStyle = '#eee';
-      ctx.font = '14px system-ui';
+      ctx.save();
+      ctx.translate(20,h/2);
+      ctx.rotate(-Math.PI/2);
       ctx.textAlign = 'center';
-      ctx.textBaseline = 'bottom';
-      ctx.fillText(cernLabels[i], x+barWidth/2, h-35);
-      ctx.fillText(v, x+barWidth/2, y-6);
-    });
+      ctx.fillStyle = '#bbb';
+      ctx.fillText('事件數',0,0);
+      ctx.restore();
 
-    ctx.textAlign='center';
-    ctx.textBaseline='top';
-    ctx.fillStyle='#bbb';
-    ctx.fillText('雙μ子不變質量 (GeV)', w/2, h-15);
+      const chartW = w-80;
+      const gap = 20;
+      const barWidth = (chartW - gap*(cernData.length-1))/cernData.length;
 
-    const total = cernData.reduce((a,b)=>a+b,0);
-    document.getElementById('chartStats').innerHTML = `<strong>總事件數：</strong>${total.toLocaleString()}`;
-  }
+      cernData.forEach((v,i)=>{
+        const x = 60 + i*(barWidth+gap);
+        const barH = (h-140)*(v/maxVal);
+        const y = h-60-barH;
 
-  drawChart();
-  window.addEventListener('resize', drawChart);
-})();
-</script>
+        ctx.fillStyle = barColor;
+        roundRect(ctx,x,y,barWidth,barH,6,true,false);
+
+        ctx.strokeStyle = borderColor;
+        ctx.lineWidth = 2;
+        roundRect(ctx,x,y,barWidth,barH,6,false,true);
+
+        ctx.fillStyle = '#eee';
+        ctx.font = '14px system-ui';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(cernLabels[i], x+barWidth/2, h-35);
+        ctx.fillText(v, x+barWidth/2, y-6);
+      });
+
+      ctx.textAlign='center';
+      ctx.textBaseline='top';
+      ctx.fillStyle='#bbb';
+      ctx.fillText('雙μ子不變質量 (GeV)', w/2, h-15);
+
+      const total = cernData.reduce((a,b)=>a+b,0);
+      document.getElementById('chartStats').innerHTML = `<strong>總事件數：</strong>${total.toLocaleString()}`;
+    }
+
+    drawChart();
+    window.addEventListener('resize', drawChart);
+  })();
+
+  // 過場影片淡出
+  const video = document.getElementById('introVideo');
+  video.addEventListener('timeupdate', () => {
+    if(video.duration - video.currentTime <= 0.5){
+      video.style.opacity = '0';
+    }
+  });
+  video.addEventListener('ended', () => {
+    video.remove();
+  });
+  </script>
 
 </body>
 </html>
