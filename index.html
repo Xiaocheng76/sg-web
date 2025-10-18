@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intro</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: black; /* 防止載入時閃白 */
+    overflow: hidden;
+  }
+
+  /* 黑色預載畫面 */
+  #loading-cover {
+    position: fixed;
+    inset: 0;
+    background: black;
+    z-index: 9999;
+  }
+
+  /* 全螢幕影片 */
+  #transition-video {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    z-index: 10000;
+    transition: opacity 0.5s ease;
+    display: none;
+  }
+
+  #transition-video.visible {
+    display: block;
+    opacity: 1;
+  }
+
+  #transition-video.fade-out {
+    opacity: 0;
+  }
+
+  /* 測試用的底層頁面（實際上你會被它遮住） */
+  .content {
+    color: white;
+    text-align: center;
+    margin-top: 40vh;
+    font-size: 2rem;
+  }
+</style>
+</head>
+<body>
+  <div class="content">
+    <p>Loading...</p>
+  </div>
+
+  <div id="loading-cover"></div>
+  <video id="transition-video" src="intro.mp4"></video>
+
+  <script>
+    const video = document.getElementById("transition-video");
+    const cover = document.getElementById("loading-cover");
+
+    // 當影片能播放時再顯示，防止載入前閃白
+    video.addEventListener("canplaythrough", () => {
+      cover.style.display = "none";
+      video.classList.add("visible");
+      video.play();
+
+      // 一播放就跳轉（不中斷）
+      window.location.href = "sg.html";
+
+      // 在最後 0.5 秒淡出影片
+      video.addEventListener("timeupdate", () => {
+        if (video.duration - video.currentTime <= 0.5) {
+          video.classList.add("fade-out");
+        }
+      });
+    });
+
+    // 預載影片（這樣影片不會卡頓）
+    video.load();
+  </script>
+</body>
+</html>
