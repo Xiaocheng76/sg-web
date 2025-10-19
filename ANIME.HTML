@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>開場動畫 - Vimeo</title>
+<style>
+  html, body { margin:0; height:100%; background:black; overflow:hidden; }
+  #loading {
+    position: fixed; inset:0;
+    background:black; color:white;
+    display:flex; align-items:center; justify-content:center;
+    font-family:"Noto Sans TC",sans-serif; z-index:10;
+    font-size:1.2rem; cursor:pointer; transition:opacity 0.5s;
+  }
+  iframe { width:100%; height:100%; border:none; display:none; }
+  #fadeOverlay { position:fixed; inset:0; background:black; opacity:0; pointer-events:none; transition:0.5s; z-index:20; }
+</style>
+</head>
+<body>
+
+<div id="loading">🎬 動畫載入中... 點擊開始播放</div>
+
+<iframe id="vimeoPlayer" src="https://player.vimeo.com/video/1128576652?autoplay=0&muted=0&api=1&background=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="SG"></iframe>
+
+<div id="fadeOverlay"></div>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script>
+const loading = document.getElementById('loading');
+const fadeOverlay = document.getElementById('fadeOverlay');
+const iframe = document.getElementById('vimeoPlayer');
+const player = new Vimeo.Player(iframe);
+
+// 點擊播放影片（解鎖聲音）
+loading.addEventListener('click', () => {
+  loading.style.opacity = '0';
+  setTimeout(() => {
+    loading.remove();
+    iframe.style.display = 'block';
+    player.play().catch(err => console.warn("播放失敗:", err));
+  }, 500);
+});
+
+// 播放結束 → 淡出並跳轉
+player.on('ended', () => {
+  fadeOverlay.style.opacity = '1';
+  setTimeout(() => { window.location.href = 'sg.html'; }, 500);
+});
+
+// 可選：影片結尾前淡出
+player.on('timeupdate', data => {
+  if (data.duration - data.seconds <= 0.5) fadeOverlay.style.opacity = '1';
+});
+</script>
+
+</body>
+</html>
