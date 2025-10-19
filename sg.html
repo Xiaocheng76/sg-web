@@ -1,87 +1,301 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intro</title>
-<style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: black; /* 防止載入時閃白 */
-    overflow: hidden;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>未來道具研究所</title>
+  <style>
+    :root{
+      --max-width: 1000px;
+      --accent: hsl(217, 31%, 65%);
+      --card-bg: #2a2a2a;
+      --page-bg: #1a1a1a;
+      --muted: #bbb;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", Helvetica, Arial; }
 
-  /* 黑色預載畫面 */
-  #loading-cover {
-    position: fixed;
-    inset: 0;
-    background: black;
-    z-index: 9999;
-  }
+    body {
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+    }
 
-  /* 全螢幕影片 */
-  #transition-video {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    z-index: 10000;
-    transition: opacity 0.5s ease;
-    display: none;
-  }
+    .site-header {
+      width: 100%;
+      max-width: var(--max-width);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+    }
 
-  #transition-video.visible {
-    display: block;
-    opacity: 1;
-  }
+    .site-header h1 {
+      font-weight: bold;
+      font-size: clamp(24px, 5vw, 48px);
+      text-shadow: 2px 2px 0 #000;
+      margin-bottom: 10px;
+    }
 
-  #transition-video.fade-out {
-    opacity: 0;
-  }
+    .site-header p {
+      font-size: clamp(16px, 3vw, 20px);
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 0 #000;
+    }
 
-  /* 測試用的底層頁面（實際上你會被它遮住） */
-  .content {
-    color: white;
-    text-align: center;
-    margin-top: 40vh;
-    font-size: 2rem;
-  }
-</style>
+    .main-nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 16px;
+      text-shadow: 1px 1px 0 #000;
+    }
+
+    main {
+      width: 100%;
+      max-width: var(--max-width);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    }
+
+    .video-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    .video-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+
+    figure { margin: 0; }
+    figure img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+    }
+
+    #chartCanvas { width: 100%; height: 400px; display: block; }
+
+    .site-footer {
+      width: 100%;
+      max-width: var(--max-width);
+      margin-top: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 12px;
+    }
+
+    #chartStats { margin-top: 10px; color: var(--muted); text-align: center; }
+
+    /* 過場影片浮層 */
+    #introVideo {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      object-fit: cover;
+      z-index: 999;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+  </style>
 </head>
 <body>
-  <div class="content">
-    <p>Loading...</p>
+
+  <!-- 過場動畫影片 -->
+  <video id="introVideo" src="intro.mp4" autoplay muted playsinline></video>
+
+  <!-- 原本 sg.html 內容 -->
+  <div id="mainContent">
+    <header class="site-header">
+      <h1>能在這裡相遇一定是命運石之門的選擇</h1>
+      <p>歡迎你來到我的網站，這裡有關於我的資訊可以讓你更好了解我，El Psy Kongroo。</p>
+      <nav class="main-nav">
+        <a href="#media">影片與圖片</a>
+        <a href="#stats">統計圖</a>
+        <a href="#classmates">同學網站</a>
+        <a href="ANIME.HTML"><span style="color: rgba(255, 249, 215, 0.836);">命運石之門</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="media" class="card">
+        <h2>我最喜歡的影片</h2>
+        <div class="video-wrap">
+          <iframe 
+            width="1415" 
+            height="796" 
+            src="https://www.youtube.com/embed/I012yI2Kzqg?loop=1&playlist=I012yI2Kzqg" 
+            title="Steins;Gate 0 PS3/PS4/Vita OP - Amadeus" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <h2>我最喜歡的照片</h2>
+        <figure>
+          <img src="https://cdna.artstation.com/p/assets/images/images/050/568/388/large/asophxs-img-20220613-180840.jpg?1655161821" alt="照片">
+        </figure>
+      </section>
+
+      <section id="stats" class="card">
+        <h2>CERN CMS 雙μ子不變質量分佈圖</h2>
+        <canvas id="chartCanvas"></canvas>
+        <div id="chartStats"></div>
+        <p class="note">此圖表顯示了來自 CMS 實驗的簡化雙μ子不變質量數據。在約91 GeV處的峰值代表Z玻色子。</p>
+      </section>
+
+      <section id="classmates" class="card">
+        <h2>班上同學網站連結</h2>
+        <ul>
+          <li><a href="https://benbenben0721.github.io/-/" target="_blank">西洋棋 </a></li>
+          <li><a href="https://newbie123-blip.github.io/homework1/index.html" target="_blank">Bus driver hub</a></li>
+          <li><a href="https://example.com/classmate3" target="_blank">同學 C 的網站（未完成）</a></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>聯絡：1976999g@gmail.com</p>
+      <p>歡迎來到未來道具研究所，我們對於科學的敬畏與熱愛不會改變，即便遭到神明的撻伐也一樣，El Psy Kongroo。</p>
+    </footer>
   </div>
 
-  <div id="loading-cover"></div>
-  <video id="transition-video" src="intro.mp4"></video>
+  <canvas id="chartCanvas" style="width:100%;height:400px;"></canvas>
 
   <script>
-    const video = document.getElementById("transition-video");
-    const cover = document.getElementById("loading-cover");
+  // 畫 CERN 資料圖表
+  (function(){
+    const canvas = document.getElementById('chartCanvas');
+    const ctx = canvas.getContext('2d');
+    const cernLabels = ['0-20','20-40','40-60','60-80','80-100','100-120','120-140','140-160'];
+    const cernData = [2500, 3000, 4500, 8000, 25000, 9000, 6000, 3500];
+    const barColor = '#4169E1';
+    const borderColor = '#191970';
 
-    // 當影片能播放時再顯示，防止載入前閃白
-    video.addEventListener("canplaythrough", () => {
-      cover.style.display = "none";
-      video.classList.add("visible");
-      video.play();
+    function fixDPI() {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      if(rect.width === 0 || rect.height === 0) return;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
 
-      // 一播放就跳轉（不中斷）
-      window.location.href = "sg.html";
+    function roundRect(ctx,x,y,w,h,r,fill,stroke){
+      ctx.beginPath();
+      ctx.moveTo(x+r, y);
+      ctx.arcTo(x+w, y, x+w, y+h, r);
+      ctx.arcTo(x+w, y+h, x, y+h, r);
+      ctx.arcTo(x, y+h, x, y, r);
+      ctx.arcTo(x, y, x+w, y, r);
+      ctx.closePath();
+      if(fill) ctx.fill();
+      if(stroke) ctx.stroke();
+    }
 
-      // 在最後 0.5 秒淡出影片
-      video.addEventListener("timeupdate", () => {
-        if (video.duration - video.currentTime <= 0.5) {
-          video.classList.add("fade-out");
-        }
+    function drawChart(){
+      fixDPI();
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      ctx.clearRect(0,0,w,h);
+
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(200,200,200,0.3)';
+      const numLines = 6;
+      const maxVal = Math.max(...cernData) * 1.1;
+      for(let i=0;i<numLines;i++){
+        const y = 50 + i*(h-100)/(numLines-1);
+        ctx.moveTo(40,y);
+        ctx.lineTo(w-20,y);
+
+        ctx.fillStyle = '#bbb';
+        ctx.font = '12px system-ui';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        const val = Math.round(maxVal*(numLines-1-i)/(numLines-1));
+        ctx.fillText(val, 35, y);
+      }
+      ctx.stroke();
+
+      ctx.save();
+      ctx.translate(20,h/2);
+      ctx.rotate(-Math.PI/2);
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#bbb';
+      ctx.fillText('事件數',0,0);
+      ctx.restore();
+
+      const chartW = w-80;
+      const gap = 20;
+      const barWidth = (chartW - gap*(cernData.length-1))/cernData.length;
+
+      cernData.forEach((v,i)=>{
+        const x = 60 + i*(barWidth+gap);
+        const barH = (h-140)*(v/maxVal);
+        const y = h-60-barH;
+
+        ctx.fillStyle = barColor;
+        roundRect(ctx,x,y,barWidth,barH,6,true,false);
+
+        ctx.strokeStyle = borderColor;
+        ctx.lineWidth = 2;
+        roundRect(ctx,x,y,barWidth,barH,6,false,true);
+
+        ctx.fillStyle = '#eee';
+        ctx.font = '14px system-ui';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(cernLabels[i], x+barWidth/2, h-35);
+        ctx.fillText(v, x+barWidth/2, y-6);
       });
-    });
 
-    // 預載影片（這樣影片不會卡頓）
-    video.load();
+      ctx.textAlign='center';
+      ctx.textBaseline='top';
+      ctx.fillStyle='#bbb';
+      ctx.fillText('雙μ子不變質量 (GeV)', w/2, h-15);
+
+      const total = cernData.reduce((a,b)=>a+b,0);
+      document.getElementById('chartStats').innerHTML = `<strong>總事件數：</strong>${total.toLocaleString()}`;
+    }
+
+    drawChart();
+    window.addEventListener('resize', drawChart);
+  })();
+
+  // 過場影片淡出
+  const video = document.getElementById('introVideo');
+  video.addEventListener('timeupdate', () => {
+    if(video.duration - video.currentTime <= 0.5){
+      video.style.opacity = '0';
+    }
+  });
+  video.addEventListener('ended', () => {
+    video.remove();
+  });
   </script>
+
 </body>
 </html>
